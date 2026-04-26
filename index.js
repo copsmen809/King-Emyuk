@@ -20,7 +20,7 @@ client.on("messageCreate", (message) => {
   const match = message.content.match(regex);
 
   if (match) {
-    const id = match[1];
+    const id = match[8];
     const newLink = `cdn2.slicedrive.com/${id}.mp4`;
 
     message.reply(` ${newLink}`);
