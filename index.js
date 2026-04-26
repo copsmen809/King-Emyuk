@@ -13,17 +13,33 @@ client.on("ready", () => {
   console.log(`Bot aktif sebagai ${client.user.tag}`);
 });
 
-client.on("messageCreate", (message) => {
+client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
 
-  const regex = /(?:https?:\/\/)?videy\.co\/v\?id=([a-zA-Z0-9]+)/;
-  const match = message.content.match(regex);
+  // ambil semua link videy (max 8)
+  const regex = /(?:https?:\/\/)?videy\.co\/v\?id=([a-zA-Z0-9]+)/g;
+  const matches = [...message.content.matchAll(regex)];
 
-  if (match) {
-    const id = match[8];
-    const newLink = `cdn2.slicedrive.com/${id}.mp4`;
+  if (matches.length > 0) {
+    // ambil max 8
+    const limited = matches.slice(0, 8);
 
-    message.reply(` ${newLink}`);
+    const links = limited.map(m => {
+      const id = m[1];
+      return `cdn2.slicedrive.com/${id}.mp4`;
+    });
+
+    // kirim hasil
+    await message.reply({
+      content: `🎬 Converted (${links.length}):\n` + links.join("\n"),
+    });
+
+    // coba hapus pesan asli
+    try {
+      await message.delete();
+    } catch (err) {
+      console.log("Gagal hapus pesan (izin kurang)");
+    }
   }
 });
 
