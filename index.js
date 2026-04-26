@@ -16,6 +16,10 @@ client.on("ready", () => {
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
 
+  client.on("messageCreate", (message) => {
+  console.log("TERBACA:", message.content);
+});
+
   // ambil semua link videy (max 8)
   const regex = /(?:https?:\/\/)?videy\.co\/v\?id=([a-zA-Z0-9]+)/g;
   const matches = [...message.content.matchAll(regex)];
