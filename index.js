@@ -35,7 +35,7 @@ client.on("messageCreate", async (message) => {
 
     // kirim hasil
     await message.reply({
-      content: `🎬 Converted (${links.length}):\n` + links.join("\n"),
+      content: ` Converted (${links.length}):\n` + links.join("\n"),
     });
 
     // coba hapus pesan asli
