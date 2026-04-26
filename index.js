@@ -16,7 +16,7 @@ client.on("ready", () => {
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
 
-  // 🔍 DEBUG (INI YANG KAMU TANYA)
+  // 🔍 DEBUG (buat cek bot baca pesan)
   console.log("TERBACA:", message.content);
 
   const regex = /(?:https?:\/\/)?videy\.co\/v\?id=([a-zA-Z0-9]+)/g;
@@ -30,8 +30,10 @@ client.on("messageCreate", async (message) => {
       return `cdn2.slicedrive.com/${id}.mp4`;
     });
 
-    await message.channel.send(links.join("\n"));
+    // 🔥 kirim link dengan jarak (biar ga mepet)
+    await message.channel.send(links.join("\n\n"));
 
+    // hapus pesan asli
     try {
       await message.delete();
     } catch (err) {
