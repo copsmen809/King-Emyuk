@@ -23,7 +23,7 @@ client.on("messageCreate", (message) => {
     const id = match[1];
     const newLink = `cdn2.slicedrive.com/${id}.mp4`;
 
-    message.reply(`🎬 ${newLink}`);
+    message.reply(` ${newLink}`);
   }
 });
 
