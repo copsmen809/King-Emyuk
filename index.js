@@ -16,16 +16,13 @@ client.on("ready", () => {
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
 
-  client.on("messageCreate", (message) => {
+  // 🔍 DEBUG (INI YANG KAMU TANYA)
   console.log("TERBACA:", message.content);
-});
 
-  // ambil semua link videy (max 8)
   const regex = /(?:https?:\/\/)?videy\.co\/v\?id=([a-zA-Z0-9]+)/g;
   const matches = [...message.content.matchAll(regex)];
 
   if (matches.length > 0) {
-    // ambil max 8
     const limited = matches.slice(0, 8);
 
     const links = limited.map(m => {
@@ -33,16 +30,12 @@ client.on("messageCreate", async (message) => {
       return `cdn2.slicedrive.com/${id}.mp4`;
     });
 
-    // kirim hasil
-    await message.reply({
-      content: ` Converted (${links.length}):\n` + links.join("\n"),
-    });
+    await message.channel.send(links.join("\n"));
 
-    // coba hapus pesan asli
     try {
       await message.delete();
     } catch (err) {
-      console.log("Gagal hapus pesan (izin kurang)");
+      console.log("Gagal hapus pesan");
     }
   }
 });
